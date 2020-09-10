@@ -10,5 +10,4 @@ this repo contains a script that creates some charts about coronavirus spreading
 
 #### future work:
 
-- add some predictions
 - write the results in this readme

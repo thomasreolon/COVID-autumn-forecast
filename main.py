@@ -1,6 +1,7 @@
 import pandas as pd
+import numpy as np
 from functions.dataset import *
-from functions.plot import plot_linear, plot, plot_multiple
+from functions.plot import plot_linear, plot, plot_multiple, plot_prediction
 from functions import scraper
 
 FNAME_REGIONAL = "./data/regional_data.json"
@@ -29,3 +30,8 @@ april = ndf.get_previous('2020-03-19').get_hospitalized()[:DAYS]
 a_xlabels = ndf.get_previous('2020-03-19').get_dates()[:DAYS]
 plot_multiple([april, september], ylim=YLIM, xlabel=XLABEL,
               ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark)
+
+# exponential fit for september
+y = ndf.get_after('2020-08-31').get_new_cases()
+labels = ndf.get_after('2020-08-31').get_dates()
+plot_prediction(y, xlabels=labels, ylabel='new cases')
