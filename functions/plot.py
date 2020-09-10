@@ -1,5 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pathlib
+
+img_fold = pathlib.Path(__file__).parent.absolute() / ".." / "images"
+L_CLR = '999999'
 
 
 def with_style(func):
@@ -14,6 +18,7 @@ def with_style(func):
 
         if not done:
             func(*args, **kw)
+        plt.clf()
 
     return wrapper
 
@@ -37,7 +42,7 @@ def set_x_ticks(xlabels, n_lab, special=None):
 
 
 @with_style
-def plot_linear(y, deg=2, ylim=None, xlabel='time', ylabel='y', xlabels=None, n_lab=5, style=None):
+def plot_linear(y, deg=2, ylim=None, xlabel='time', ylabel='y', xlabels=None, n_lab=5, style=None, save=None):
     # use polinomial regression
     x = [x for x in range(len(y))]
     cff = np.polyfit(x, y, deg)
@@ -54,31 +59,39 @@ def plot_linear(y, deg=2, ylim=None, xlabel='time', ylabel='y', xlabels=None, n_
     # plot datapoints
     plt.plot(x, y, 'bo')
 
-    plt.xlabel(xlabel, labelpad=15, fontsize=11, color="#616161")
-    plt.ylabel(ylabel, labelpad=15, fontsize=11, color="#616161")
+    plt.xlabel(xlabel, labelpad=15, fontsize=11, color=L_CLR)
+    plt.ylabel(ylabel, labelpad=15, fontsize=11, color=L_CLR)
 
     # set maximum height
     if ylim:
         plt.ylim(0, ylim)
-    plt.show()
+
+    if not save:
+        plt.show()
+    else:
+        plt.savefig(img_fold / save)
 
 
 @with_style
-def plot(y, xlabels, xlabel='x', ylabel='y', n_lab=5, style=None):
-    plt.figure(figsize=(12, 4))
+def plot(y, xlabels, xlabel='x', ylabel='y', n_lab=5, style=None, save=None):
+    plt.figure(figsize=(12, 6))
 
     # x,y labels
     set_x_ticks(xlabels, n_lab)
-    plt.xlabel(xlabel, labelpad=15, fontsize=11, color="#616161")
-    plt.ylabel(ylabel, labelpad=15, fontsize=11, color="#616161")
+    plt.xlabel(xlabel, labelpad=15, fontsize=11, color=L_CLR)
+    plt.ylabel(ylabel, labelpad=15, fontsize=11, color=L_CLR)
 
     # plot data
     plt.plot(np.arange(len(y)), y, 'r')
-    plt.show()
+
+    if not save:
+        plt.show()
+    else:
+        plt.savefig(img_fold / save)
 
 
 @with_style
-def plot_multiple(points: list, columns=2, ylim=None, xlabel='time', ylabel='y',  xlabels=None, n_lab=5, style=None):
+def plot_multiple(points: list, columns=2, ylim=None, xlabel='time', ylabel='y',  xlabels=None, n_lab=5, style=None, save=None):
     B_SZ = 5
     rows = -(-len(points)//columns)
     fig = plt.figure(figsize=(B_SZ*columns, B_SZ*rows))
@@ -92,17 +105,20 @@ def plot_multiple(points: list, columns=2, ylim=None, xlabel='time', ylabel='y',
         plt.plot(np.arange(len(y)), y, 'g')
         # styling
         set_x_ticks(xticks, n_lab)
-        plt.xlabel(xlabel, labelpad=15, fontsize=11, color="#616161")
-        plt.ylabel(ylabel, labelpad=15, fontsize=11, color="#616161")
+        plt.xlabel(xlabel, labelpad=15, fontsize=11, color=L_CLR)
+        plt.ylabel(ylabel, labelpad=15, fontsize=11, color=L_CLR)
         if ylim:
             plt.ylim(0, ylim)
     fig.tight_layout()
 
-    plt.show()
+    if not save:
+        plt.show()
+    else:
+        plt.savefig(img_fold / save)
 
 
 @with_style
-def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None):
+def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None, save=None):
     FP = 14  # how many days in the future
     # predict
     x = np.arange(len(y))
@@ -115,8 +131,8 @@ def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None)
     plt.plot(X, Y, 'r')
 
     # add labels
-    plt.xlabel(xlabel, labelpad=15, fontsize=11, color="#616161")
-    plt.ylabel(ylabel, labelpad=15, fontsize=11, color="#616161")
+    plt.xlabel(xlabel, labelpad=15, fontsize=11, color=L_CLR)
+    plt.ylabel(ylabel, labelpad=15, fontsize=11, color=L_CLR)
 
     # calc date of prediction
     date = xlabels[-1]
@@ -138,4 +154,7 @@ def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None)
                  textcoords="offset points", xytext=(-50, -50), ha='center'
                  )
 
-    plt.show()
+    if not save:
+        plt.show()
+    else:
+        plt.savefig(img_fold / save)
