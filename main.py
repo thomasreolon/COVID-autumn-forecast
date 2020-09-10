@@ -25,12 +25,12 @@ s_xlabels = ndf.get_after('2020-08-22').get_dates()[-DAYS:]
 # plot intensive care for the whole dataset
 intensive, dates = ndf.get_intensive(), ndf.get_dates()
 plot(intensive, dates, xlabel='giorni', ylabel='terapia intensiva',
-     style=dark, save='aprilseptember.png')
+     style=dark, save='intensive.png')
 
 # comparison: april vs september
 april = ndf.get_previous('2020-03-19').get_hospitalized()[:DAYS]
 a_xlabels = ndf.get_previous('2020-03-19').get_dates()[:DAYS]
-plot_multiple([april, september], ylim=YLIM, xlabel=XLABEL, save='intensive.png',
+plot_multiple([april, september], ylim=YLIM, xlabel=XLABEL, save='aprilseptember.png',
               ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark)
 
 # exponential fit for september
