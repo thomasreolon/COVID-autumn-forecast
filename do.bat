@@ -1,4 +1,12 @@
+:: SCRIPT BEHAVIOUR
 :: run main.py --> get date --> commit --> push
+
+
+:: DEPENDENCIES NEEDED TO RUN main.py
+:: - numpy
+:: - pandas
+:: - matplotlib
+:: - requests
 
 python main.py -S
 
@@ -10,9 +18,3 @@ git commit -m "auto update: %date%"
 
 git push
 
-
-:: DEPENDENCIES NEEDED TO RUN main.py
-:: - numpy
-:: - pandas
-:: - matplotlib
-:: - requests
