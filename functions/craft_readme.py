@@ -13,18 +13,51 @@ The data used in the forecasts is available at [pcm-dpc covid repository](https:
 
 ## Risultati
 
-Il primo grafico compara la crescita degli ospitalizzati ad aprile vs settembre
+
+#### Previsioni
+
+Previsione a 2 settimane nel futuro del numero di casi in **terapia intensiva**. (modello `Yapprossimata=Ae^(Bx)`)
+
+![april vs september](images/predictionint.png)
+
+
+Previsione a 2 settimane nel futuro del numero di nuovi casi. (modello `Yapprossimata=Ae^(Bx)`)
+
+![april vs september](images/prediction.png)
+
+#### Aprile vs Settembre
+
+Persone in ospedale causa covid: aprile e settembre
 
 ![april vs september](images/aprilseptember.png)
 
-Il secondo grafico mostra il numero dei ricoverati in terapia intensiva nel tempo.
-Ricordiamo che il primo lockdown avvenne il 18 aprile, quando il numero dei casi era intorno ai 2550
+Morti in **Veneto** causa covid: aprile e settembre
 
-![april vs september](images/intensive.png)
+![april vs september](images/aprilseptemberve.png)
 
-L'ultimo grafico mostra una previsione a 2 settimane nel futuro. (modello `Yapprossimata=Ae^(Bx)`)
+Morti in **Trentino** causa covid: aprile e settembre
 
-![april vs september](images/prediction.png)
+![april vs september](images/aprilseptembertr.png)
+
+Terapia Intensiva in **Veneto** causa covid: aprile e settembre
+
+![april vs september](images/aprilseptemberveintensive.png)
+
+Terapia Intensiva in **Lazio** causa covid: aprile e settembre
+
+![april vs september](images/aprilseptemberveintensila.png)
+
+
+#### Storici
+
+Storico dei ricoverati in terapia intensiva
+
+![casi intensivi](images/intensive.png)
+
+Storico dei nuovi casi registrati
+
+![new cases](images/infections.png)
+
 
     """.format(date.today())
 

@@ -39,6 +39,43 @@ labels = ndf.get_after('2020-08-31').get_dates()
 plot_prediction(y, xlabels=labels, ylabel='new cases', save='prediction.png')
 
 
+# NEW DIAGRAMS (veneto & trento)
+YLABEL = 'new death'
+trento = rdf.get_region('P.A. Trento')
+april = trento.get_previous('2020-03-19').get_deaths()[:DAYS]
+september = trento.get_after('2020-08-22').get_deaths()[-DAYS:]
+plot_multiple([april, september], xlabel=XLABEL, save='aprilseptembertr.png',
+              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
+
+veneto = rdf.get_region('Veneto')
+april = veneto.get_previous('2020-03-19').get_deaths()[:DAYS]
+september = veneto.get_after('2020-08-22').get_deaths()[-DAYS:]
+plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberve.png',
+              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
+
+april = veneto.get_previous('2020-03-19').get_intensive()[:DAYS]
+september = veneto.get_after('2020-08-22').get_intensive()[-DAYS:]
+plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensive.png',
+              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
+
+lazio = rdf.get_region('Lazio')
+april = lazio.get_previous('2020-03-19').get_intensive()[:DAYS]
+september = lazio.get_after('2020-08-22').get_intensive()[-DAYS:]
+plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensila.png',
+              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
+
+# Terapia intensiva prevista
+y = ndf.get_after('2020-08-31').get_intensive()
+labels = ndf.get_after('2020-08-31').get_dates()
+plot_prediction(y, xlabels=labels, ylabel='intensive care',
+                save='predictionint.png')
+
+# Storico infezioni
+intensive, dates = ndf.get_new_cases(), ndf.get_dates()
+plot(intensive, dates, xlabel='days', ylabel='new infected',
+     style=dark, save='infections.png')
+
+
 # WRITE
 # NEW
 # README

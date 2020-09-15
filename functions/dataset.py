@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy
 
 _rdataset = None
 _ndataset = None
@@ -26,6 +27,13 @@ class MyDF(object):
 
     def get_intensive(self):
         return self.df['terapia_intensiva'].values.tolist()
+
+    def get_deaths(self):
+        a = self.df['deceduti'].values.tolist()
+        res = [0]
+        for i in range(len(a)):
+            res.append(max(a[i]-a[i-1], 0))
+        return res
 
     def get_dates(self):
         tmp = self.df['data'].values.tolist()
