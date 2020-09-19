@@ -14,12 +14,27 @@ The data used in the forecasts is available at [pcm-dpc covid repository](https:
 ## Risultati
 
 
+#### Stati Europei
+
+Italia vs UK vs Francia: morti
+
+![april vs september](images/gdeaths.png)
+
+Italia vs UK vs Francia: nuovi casi
+
+![april vs september](images/ginfections.png)
+
+Italia vs Francia: terapia intensiva
+
+![april vs september](images/gintensive.png)
+
+
+
 #### Previsioni
 
 Previsione a 2 settimane nel futuro del numero di casi in **terapia intensiva**. (modello `Yapprossimata=Ae^(Bx)`)
 
 ![april vs september](images/predictionint.png)
-
 
 Previsione a 2 settimane nel futuro del numero di nuovi casi. (modello `Yapprossimata=Ae^(Bx)`)
 

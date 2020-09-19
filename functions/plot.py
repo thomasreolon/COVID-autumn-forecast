@@ -122,6 +122,7 @@ def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None,
     FP = 14  # how many days in the future
     # predict
     x = np.arange(len(y))
+    y = np.array(y) + 0.5
     cff = np.polyfit(x, np.log(y), 1, w=np.sqrt(y))
     X = np.linspace(x[0], x[-1]+FP, 100)
     Y = np.exp(cff[1])*np.exp(X*cff[0])
@@ -153,6 +154,25 @@ def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None,
                  bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.8),
                  textcoords="offset points", xytext=(-50, -50), ha='center'
                  )
+
+    if not save:
+        plt.show()
+    else:
+        plt.savefig(img_fold / save)
+
+
+@with_style
+def plot_comparison(x: list, y: list,  xlabels: list, ylabels: list, xlabel='time', title='', n_lab=4, style=None, save=None):
+    colors = ['tomato', 'gold', 'orange', 'y']
+
+    for xx, yy, c, lab in zip(x, y, colors, ylabels):
+        plt.plot(xx, yy, color=c, label=lab)
+
+    set_x_ticks(xlabels, n_lab)
+    ax = plt.gca()
+    ax.legend()
+
+    plt.title(title)
 
     if not save:
         plt.show()

@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy
+from datetime import date
 
-_rdataset = None
-_ndataset = None
-
+_cache = {}
 
 # wraps a dataframe to make it easier / more readible
+
+
 class MyDF(object):
     def __init__(self, df: pd.DataFrame):
         self.df = df
@@ -40,18 +41,22 @@ class MyDF(object):
         tmp = [x[:10] for x in tmp]
         return tmp
 
+    def get_dates_as_int(self, base_date):
+        tmp = self.df['data'].values.tolist()
+        tmp = [x[:10] for x in tmp]
 
-# load national dataset into memory
-def load_national(fpath):
-    global _ndataset
-    if not _ndataset:
-        _ndataset = pd.read_json(fpath)
-    return MyDF(_ndataset)
+        bd = date(*[int(x) for x in base_date.split('-')])
+        tmp2 = []
+        for dd in tmp:
+            d = date(*[int(x) for x in dd.split('-')])
+            tmp2.append((d-bd).days)
+
+        return tmp2
 
 
-# load reg. dataset into memory
-def load_regional(fpath):
-    global _rdataset
-    if not _rdataset:
-        _rdataset = pd.read_json(fpath)
-    return MyDF(_rdataset)
+# load file into memory
+def load_file(fpath):
+    global _cache
+    if fpath not in _cache:
+        _cache[fpath] = pd.read_json(fpath)
+    return MyDF(_cache[fpath])

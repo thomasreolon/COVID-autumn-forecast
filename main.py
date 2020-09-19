@@ -1,16 +1,17 @@
 import pandas as pd
 import numpy as np
 from functions.dataset import *
-from functions.plot import plot_linear, plot, plot_multiple, plot_prediction
+from functions.plot import plot_linear, plot, plot_multiple, plot_prediction, plot_comparison
 from functions.craft_readme import write_rd
 from functions import scraper
 
-FNAME_REGIONAL = "./data/regional_data.json"
-FNAME_NATIONAL = "./data/national_data.json"
+FOLDER = "./data/"
 
 # load datasets
-ndf = load_national(FNAME_NATIONAL)
-rdf = load_regional(FNAME_REGIONAL)
+ndf = load_file(FOLDER+'national_data.json')
+rdf = load_file(FOLDER+'regional_data.json')
+ukdf = load_file(FOLDER+'uk.json')
+frdf = load_file(FOLDER+'france.json')
 dark = 'dark_background'
 
 # plot hospitalized people in april vs september
@@ -74,6 +75,71 @@ plot_prediction(y, xlabels=labels, ylabel='intensive care',
 intensive, dates = ndf.get_new_cases(), ndf.get_dates()
 plot(intensive, dates, xlabel='days', ylabel='new infected',
      style=dark, save='infections.png')
+
+
+# nations comparison DEATHS global
+BASE_DATE = '2020-02-24'
+y = [
+    ndf.get_after(BASE_DATE).get_deaths()[2:],
+    ukdf.get_after(BASE_DATE).get_deaths()[2:],
+    frdf.get_after(BASE_DATE).get_deaths()[2:]
+]
+x = [
+    ndf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)[1:],
+    ukdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)[1:],
+    frdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)[1:]
+]
+
+ylabels = [
+    'italia',
+    'UK',
+    'francia'
+]
+dates = ndf.get_after(BASE_DATE).get_dates()[1:]
+plot_comparison(x, y, dates, ylabels, style=dark,
+                title='andamento morti', save='gdeaths.png')
+
+
+# nations comparison new infected latest
+BASE_DATE = '2020-08-01'
+y = [
+    ndf.get_after(BASE_DATE).get_new_cases(),
+    ukdf.get_after(BASE_DATE).get_new_cases(),
+    frdf.get_after(BASE_DATE).get_new_cases()
+]
+x = [
+    ndf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE),
+    ukdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE),
+    frdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)
+]
+
+ylabels = [
+    'italia',
+    'UK',
+    'francia'
+]
+dates = ndf.get_after(BASE_DATE).get_dates()
+plot_comparison(x, y, dates, ylabels, style=dark,
+                title='nuovi casi di covid', save='ginfections.png')
+
+
+# ita vs france
+y = [
+    ndf.get_after(BASE_DATE).get_intensive(),
+    frdf.get_after(BASE_DATE).get_intensive()
+]
+x = [
+    ndf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE),
+    frdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)
+]
+
+ylabels = [
+    'italia',
+    'francia'
+]
+dates = ndf.get_after(BASE_DATE).get_dates()
+plot_comparison(x, y, dates, ylabels, style=dark,
+                title='terapia intensiva FR vs IT', save='gintensive.png')
 
 
 # WRITE
