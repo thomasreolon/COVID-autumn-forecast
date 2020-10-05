@@ -79,7 +79,7 @@ def plot(y, xlabels, xlabel='x', ylabel='y', n_lab=5, style=None, save=None):
     # x,y labels
     set_x_ticks(xlabels, n_lab)
     plt.xlabel(xlabel, labelpad=15, fontsize=11, color=L_CLR)
-    plt.ylabel(ylabel, labelpad=15, fontsize=11, color=L_CLR)
+    plt.ylabel(ylabel, labelpad=15, fontsize=15, color=L_CLR)
 
     # plot data
     plt.plot(np.arange(len(y)), y, 'r')
@@ -106,7 +106,7 @@ def plot_multiple(points: list, columns=2, ylim=None, xlabel='time', ylabel='y',
         # styling
         set_x_ticks(xticks, n_lab)
         plt.xlabel(xlabel, labelpad=15, fontsize=11, color=L_CLR)
-        plt.ylabel(ylabel, labelpad=15, fontsize=11, color=L_CLR)
+        plt.ylabel(ylabel, labelpad=15, fontsize=15, color=L_CLR)
         if ylim:
             plt.ylim(0, ylim)
     fig.tight_layout()
@@ -133,7 +133,7 @@ def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None,
 
     # add labels
     plt.xlabel(xlabel, labelpad=15, fontsize=11, color=L_CLR)
-    plt.ylabel(ylabel, labelpad=15, fontsize=11, color=L_CLR)
+    plt.ylabel(ylabel, labelpad=15, fontsize=15, color=L_CLR)
 
     # calc date of prediction
     date = xlabels[-1]

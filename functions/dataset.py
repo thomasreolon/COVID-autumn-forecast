@@ -10,17 +10,31 @@ _cache = {}
 class MyDF(object):
     def __init__(self, df: pd.DataFrame):
         self.df = df
-        self.functs = {
-            'region': self.get_region,
-            'prevous': self.get_previous,
-            'after': self.get_after,
-            'new': self.get_new_cases,
-            'hospital': self.get_hospitalized,
-            'intensive': self.get_intensive,
-            'deaths': self.get_deaths,
-            'dates': self.get_dates,
-            'datesint': self.get_dates_as_int,
-        }
+
+    def _call(self, fname, *args, **kw):
+        res = None
+        if fname == 'region':
+            res = self.get_region(*args, **kw)
+        elif fname == 'previous':
+            res = self.get_previous(*args, **kw)
+        elif fname == 'after':
+            res = self.get_after(*args, **kw)
+        elif fname == 'new_cases':
+            res = self.get_new_cases(*args, **kw)
+        elif fname == 'hospitalized':
+            res = self.get_hospitalized(*args, **kw)
+        elif fname == 'intensive':
+            res = self.get_intensive(*args, **kw)
+        elif fname == 'deaths':
+            res = self.get_deaths(*args, **kw)
+        elif fname == 'dates':
+            res = self.get_dates(*args, **kw)
+        elif fname == 'dates_as_int':
+            res = self.get_dates_as_int(*args, **kw)
+
+        if not res:
+            raise(Exception(f'{fname} not found'))
+        return res
 
     def get_region(self, region_name='Veneto'):
         return MyDF(self.df[self.df['denominazione_regione'] == region_name])
@@ -65,13 +79,16 @@ class MyDF(object):
 
         return tmp2
 
-    def __getattribute__(self, f_name):
-        if isinstance(f_name[0], str):
-            res = self.functs[f_name[0]](f_name[1])
-        elif isinstance(f_name[0], (tuple, list)):
-            res = None
-            for fn, fv in f_name:
-                res = self.functs[fn](fv)
+    def compose(self, todos):
+        res = self
+        if isinstance(todos, str):
+            res = res._call(todos)
+        elif isinstance(todos, (tuple, list)):
+            for todo in todos:
+                if isinstance(todo, str):
+                    res = res._call(todo)
+                else:
+                    res = res._call(*todo)
 
         return res
 

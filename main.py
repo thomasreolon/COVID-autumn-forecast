@@ -4,6 +4,7 @@ from functions.dataset import *
 from functions.plot import plot_linear, plot, plot_multiple, plot_prediction, plot_comparison
 from functions.craft_readme import write_rd
 from functions import scraper
+from functions.plot_maker import PlotsMaker
 
 FOLDER = "./data/"
 
@@ -13,6 +14,16 @@ rdf = load_file(FOLDER+'regional_data.json')
 ukdf = load_file(FOLDER+'uk.json')
 frdf = load_file(FOLDER+'france.json')
 dark = 'dark_background'
+
+# loads plotMaker
+pltmk = PlotsMaker(ndf, rdf)
+
+
+# try to use plotmaker
+pltmk.make_april_september(region="Veneto")
+pltmk.make_april_september(kind="deaths")
+pltmk.make_april_september(region="Sicilia", kind="intensive")
+
 
 # plot hospitalized people in april vs september
 DAYS, YLIM = 23, 20000

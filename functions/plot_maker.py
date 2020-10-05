@@ -3,16 +3,34 @@ from functions.plot import plot_multiple
 
 
 class PlotsMaker():
-    def __init__(self, national, regional):
+    def __init__(self, national, regional, AS_settings=None):
         self.national = national
         self.regional = regional
-        self.AS_labels = None
 
-    def make_april_september(self, region=None, kind='intensive', comp_days=23, style='dark_background'):
+        self.AS_settings = AS_settings or {
+            'comp_days': 23,
+            'style': 'dark_background',
+            'april': '2020-03-19',
+            'sept': '2020-08-22',
+        }
+        comp_days = self.AS_settings['comp_days']
+        ap, st = self.AS_settings['april'], self.AS_settings['sept']
+        self.AS_labels = [
+            national.get_previous(ap).get_dates()[:comp_days],
+            national.get_after(st).get_dates()[-comp_days:]
+        ]
+
+    def make_april_september(self, region=None, kind='intensive'):
         # infos
+        st = self.AS_settings
         f_output = f"AS_{region or 'national'}_{kind}.png"
-        XLABEL = f"{comp_days} giorni"
-        YLABEL = f"people in hospital"
+        XLABEL = f"{st['comp_days']} giorni"
+        YLABELS = {
+            'deaths': 'morti giornalieri',
+            'new_cases': 'nuovi casi giornalieri',
+            'hospitalized': 'persone in ospedale',
+            'intensive': 'persone in terapia intensiva',
+        }
 
         # get dataset
         df = self.national
@@ -23,22 +41,16 @@ class PlotsMaker():
                 print(f"FAILED GETTING REGION {region} --> {e}")
 
         # get dates
-        april = df.get_previous('2020-03-19').get_intensive()[:comp_days]
-        september = df.get_after(
-            '2020-08-22').get_intensive()[-comp_days:]
-
-        # load labels
-        if not self.AS_labels:
-            self.AS_labels = [df.get_previous(
-                '2020-03-19').get_dates()[:comp_days], df.get_after('2020-08-22').get_dates()[-comp_days:]]
+        april = df.compose([('previous', st['april']), kind])[:st['comp_days']]
+        sept = df.compose([('after', st['april']), kind])[-st['comp_days']:]
 
         # plot
         plot_multiple(
-            [april, september],
+            [april, sept],
             save=f_output,
             xlabel=XLABEL,
-            ylabel=YLABEL,
+            ylabel=YLABELS[kind],
             xlabels=self.AS_labels,
-            style=style,
-            ylim=max(april+september)
+            style=st['style'],
+            ylim=max(april+sept)
         )
