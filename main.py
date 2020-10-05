@@ -65,6 +65,27 @@ september = lazio.get_after('2020-08-22').get_intensive()[-DAYS:]
 plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensila.png',
               ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
 
+# Altre regioni
+
+campania = rdf.get_region('Campania')
+april = campania.get_previous('2020-03-19').get_intensive()[:DAYS]
+september = campania.get_after('2020-08-22').get_intensive()[-DAYS:]
+plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensica.png',
+              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
+
+emilia = rdf.get_region('Emilia-Romagna')
+april = emilia.get_previous('2020-03-19').get_intensive()[:DAYS]
+september = emilia.get_after('2020-08-22').get_intensive()[-DAYS:]
+plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensiem.png',
+              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
+
+lombardia = rdf.get_region('Lombardia')
+april = lombardia.get_previous('2020-03-19').get_intensive()[:DAYS]
+september = lombardia.get_after('2020-08-22').get_intensive()[-DAYS:]
+plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensilo.png',
+              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
+
+
 # Terapia intensiva prevista
 y = ndf.get_after('2020-08-31').get_intensive()
 labels = ndf.get_after('2020-08-31').get_dates()
