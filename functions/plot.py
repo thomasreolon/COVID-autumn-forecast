@@ -164,6 +164,8 @@ def plot_prediction(y,  xlabels, xlabel='time', ylabel='y', n_lab=2, style=None,
 @with_style
 def plot_comparison(x: list, y: list,  xlabels: list, ylabels: list, xlabel='time', title='', n_lab=4, style=None, save=None):
     colors = ['tomato', 'gold', 'orange', 'y']
+    # use a lower number to make more vertical space
+    plt.subplots_adjust(top=0.95)
 
     for xx, yy, c, lab in zip(x, y, colors, ylabels):
         plt.plot(xx, yy, color=c, label=lab)
