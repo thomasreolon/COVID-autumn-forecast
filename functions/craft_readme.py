@@ -1,5 +1,48 @@
 import pathlib
 from datetime import date
+from os import listdir
+from os.path import isfile, join
+
+
+mypath = pathlib.Path(__file__).parent.absolute() / ".." / "images"
+
+block_titles = {
+    'AS': 'Confronto tra i giorni precedenti al lockdown e oggi',
+    'HS': 'Storici (andamento da aprile 2020)',
+    'PR': 'Predizioni per le prossime 2 settimane',
+    'ST': 'Confronto tra nazioni europee',
+}
+
+
+def write_rd2(last_day, d3):
+    d3ago = f"```\nL'Italia 3 giorni fa\n    terapia_intensiva:      {d3['terapia_intensiva']}\n    nuovi_positivi:         {d3['nuovi_positivi']}\n    totale_ospedalizzati:   {d3['totale_ospedalizzati']}\n```\n"
+    today = f"```\nL'Italia OGGI\n    terapia_intensiva:      {last_day['terapia_intensiva']}\n    nuovi_positivi:         {last_day['nuovi_positivi']}\n    totale_ospedalizzati:   {last_day['totale_ospedalizzati']}\n```\n"
+    intro = f"\n# COVID-autumn-forecast\nAlcune Statistiche sul covid in Italia, Francia & Inghilterra\nultimo aggiornamento --> {date.today()}\nFonte dei dati sull' italia: [pcm-dpc covid repository](https://github.com/pcm-dpc/COVID-19/blob/master/dati-json/dpc-covid19-ita-regioni.json)\nAltre fonti: [Francia]('https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'),  [Regno Unito](https://api.coronavirus.data.gov.uk/v1)\n\n## Dati Generali\n```\nL'Italia il 15 marzo 2020\n    terapia_intensiva:      1672\n    nuovi_positivi:         3590\n    totale_ospedalizzati:   11335 \n```\n```\nL'Italia il 18 marzo 2020\n    terapia_intensiva:      2257\n    nuovi_positivi:         4207\n    totale_ospedalizzati:   16620 \n```\n{d3ago}{today}"
+    document = [intro]
+    plots = [
+        f for f in listdir(mypath)
+        if isfile(join(mypath, f)) and '.png' in f
+    ]
+    plots.sort()
+    plots.reverse()
+
+    tp = None
+
+    # dinamically create report sections
+    block = []
+    for f in plots:
+        if (f[:2] != tp):
+            if (len(block) > 0):
+                document.append("\n".join(block))
+            tp = f[:2]
+            block = [f"### {block_titles[tp]}\n"]
+        block.append(f"{f[3:]}\n![{tp}](images/{f})")
+    document.append("\n".join(block))
+
+    # write file
+    readme_path = pathlib.Path(__file__).parent.absolute() / ".." / "README.md"
+    with open(readme_path, 'w') as fout:
+        fout.write("\n\n".join(document))
 
 
 def write_rd():

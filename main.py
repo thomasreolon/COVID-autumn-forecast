@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from functions.dataset import *
 from functions.plot import plot_linear, plot, plot_multiple, plot_prediction, plot_comparison
-from functions.craft_readme import write_rd
+from functions.craft_readme import write_rd2 as write_rd
 from functions import scraper
 from functions.plot_maker import PlotsMaker
 
@@ -16,168 +16,41 @@ frdf = load_file(FOLDER+'france.json')
 dark = 'dark_background'
 
 # loads plotMaker
-pltmk = PlotsMaker(ndf, rdf)
+pltmk = PlotsMaker(ndf, rdf, ukdf, frdf)
 
 
-# try to use plotmaker
+#########################################################
+# CAMPI CHIAMABILI NEL CAMPO kind
+#
+#  intensive --> terapia_intensiva
+#  hospitalized --> totale_ospedalizzati
+#  deaths --> deceduti
+#  new_cases --> nuovi_positivi
+#########################################################
+
+# april vs september (natioanal & regional level)
 pltmk.make_april_september(region="Veneto")
+pltmk.make_april_september(region="Lombardia")
+pltmk.make_april_september(region="P.A. Trento")
 pltmk.make_april_september(kind="deaths")
 pltmk.make_april_september(region="Sicilia", kind="intensive")
 
+# nations comparisons
+pltmk.make_states_comparison(kind='intensive')
+pltmk.make_states_comparison(kind='new_cases')
+pltmk.make_states_comparison(kind='hospitalized')
 
-# plot hospitalized people in april vs september
-DAYS, YLIM = 23, 20000
-XLABEL, YLABEL = '{} days'.format(DAYS), 'people in hospital'
-september = ndf.get_after('2020-08-22').get_hospitalized()[-DAYS:]
-s_xlabels = ndf.get_after('2020-08-22').get_dates()[-DAYS:]
+# prediction for the future
+pltmk.make_prediction()
 
-# plot_linear(september, xlabel=XLABEL, ylabel=YLABEL, xlabels=s_xlabels)
-
-
-# plot intensive care for the whole dataset
-intensive, dates = ndf.get_intensive(), ndf.get_dates()
-plot(intensive, dates, xlabel='giorni', ylabel='terapia intensiva',
-     style=dark, save='intensive.png')
-
-# comparison: april vs september
-april = ndf.get_previous('2020-03-19').get_hospitalized()[:DAYS]
-a_xlabels = ndf.get_previous('2020-03-19').get_dates()[:DAYS]
-plot_multiple([april, september], ylim=YLIM, xlabel=XLABEL, save='aprilseptember.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark)
-
-# exponential fit for september
-y = ndf.get_after('2020-08-31').get_new_cases()
-labels = ndf.get_after('2020-08-31').get_dates()
-plot_prediction(y, xlabels=labels, ylabel='new cases', save='prediction.png')
-
-
-# NEW DIAGRAMS (veneto & trento)
-YLABEL = 'new death'
-trento = rdf.get_region('P.A. Trento')
-april = trento.get_previous('2020-03-19').get_deaths()[:DAYS]
-september = trento.get_after('2020-08-22').get_deaths()[-DAYS:]
-plot_multiple([april, september], xlabel=XLABEL, save='aprilseptembertr.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
-
-veneto = rdf.get_region('Veneto')
-april = veneto.get_previous('2020-03-19').get_deaths()[:DAYS]
-september = veneto.get_after('2020-08-22').get_deaths()[-DAYS:]
-plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberve.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
-
-april = veneto.get_previous('2020-03-19').get_intensive()[:DAYS]
-september = veneto.get_after('2020-08-22').get_intensive()[-DAYS:]
-plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensive.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
-
-lazio = rdf.get_region('Lazio')
-april = lazio.get_previous('2020-03-19').get_intensive()[:DAYS]
-september = lazio.get_after('2020-08-22').get_intensive()[-DAYS:]
-plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensila.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
-
-# Altre regioni
-
-campania = rdf.get_region('Campania')
-april = campania.get_previous('2020-03-19').get_intensive()[:DAYS]
-september = campania.get_after('2020-08-22').get_intensive()[-DAYS:]
-plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensica.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
-
-emilia = rdf.get_region('Emilia-Romagna')
-april = emilia.get_previous('2020-03-19').get_intensive()[:DAYS]
-september = emilia.get_after('2020-08-22').get_intensive()[-DAYS:]
-plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensiem.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
-
-lombardia = rdf.get_region('Lombardia')
-april = lombardia.get_previous('2020-03-19').get_intensive()[:DAYS]
-september = lombardia.get_after('2020-08-22').get_intensive()[-DAYS:]
-plot_multiple([april, september], xlabel=XLABEL, save='aprilseptemberveintensilo.png',
-              ylabel=YLABEL, xlabels=[a_xlabels, s_xlabels], style=dark, ylim=max(april+september))
-
-
-# Terapia intensiva prevista
-y = ndf.get_after('2020-08-31').get_intensive()
-labels = ndf.get_after('2020-08-31').get_dates()
-plot_prediction(y, xlabels=labels, ylabel='intensive care',
-                save='predictionint.png')
-
-# Storico infezioni
-intensive, dates = ndf.get_new_cases(), ndf.get_dates()
-plot(intensive, dates, xlabel='days', ylabel='new infected',
-     style=dark, save='infections.png')
-
-
-# nations comparison DEATHS global
-BASE_DATE = '2020-02-24'
-y = [
-    ndf.get_after(BASE_DATE).get_deaths()[2:],
-    ukdf.get_after(BASE_DATE).get_deaths()[2:],
-    frdf.get_after(BASE_DATE).get_deaths()[2:]
-]
-x = [
-    ndf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)[1:],
-    ukdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)[1:],
-    frdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)[1:]
-]
-
-ylabels = [
-    'italia',
-    'UK',
-    'francia'
-]
-dates = ndf.get_after(BASE_DATE).get_dates()[1:]
-plot_comparison(x, y, dates, ylabels, style=dark,
-                title='andamento morti', save='gdeaths.png')
-
-
-# nations comparison new infected latest
-BASE_DATE = '2020-08-01'
-y = [
-    ndf.get_after(BASE_DATE).get_new_cases(),
-    ukdf.get_after(BASE_DATE).get_new_cases(),
-    frdf.get_after(BASE_DATE).get_new_cases()
-]
-x = [
-    ndf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE),
-    ukdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE),
-    frdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)
-]
-
-ylabels = [
-    'italia',
-    'UK',
-    'francia'
-]
-dates = ndf.get_after(BASE_DATE).get_dates()
-plot_comparison(x, y, dates, ylabels, style=dark,
-                title='nuovi casi di covid', save='ginfections.png')
-
-
-# ita vs france
-y = [
-    ndf.get_after(BASE_DATE).get_intensive(),
-    frdf.get_after(BASE_DATE).get_intensive()
-]
-x = [
-    ndf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE),
-    frdf.get_after(BASE_DATE).get_dates_as_int(BASE_DATE)
-]
-
-ylabels = [
-    'italia',
-    'francia'
-]
-dates = ndf.get_after(BASE_DATE).get_dates()
-plot_comparison(x, y, dates, ylabels, style=dark,
-                title='terapia intensiva FR vs IT', save='gintensive.png')
+# plot all history
+pltmk.make_history()
 
 
 # WRITE
 # NEW
 # README
-write_rd()
+write_rd(ndf.df.iloc[-1], ndf.df.iloc[-4])
 
 
 print('DONE')
