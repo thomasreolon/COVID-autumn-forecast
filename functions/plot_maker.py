@@ -83,7 +83,7 @@ class PlotsMaker():
                 ))
                 labels.append(name)
 
-        f_output = remove_spaces(f"ST_{'_'.join(labels)}_{kind}.png")
+        f_output = remove_spaces(f"ST_{'-'.join(labels)}_{kind}.png")
         title = f"{self.YLABELS[kind]} in {' & '.join(labels)}"
         dates = df.get_after(base_date).get_dates()
 

@@ -28,11 +28,6 @@ pltmk = PlotsMaker(ndf, rdf, ukdf, frdf)
 #  new_cases --> nuovi_positivi
 #########################################################
 
-# TODOs
-# better graph
-# better description title
-# old previsions?
-
 
 # april vs september (natioanal & regional level)
 pltmk.make_april_september(region="Veneto")

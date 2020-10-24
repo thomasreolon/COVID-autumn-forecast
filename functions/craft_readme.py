@@ -8,10 +8,22 @@ mypath = pathlib.Path(__file__).parent.absolute() / ".." / "images"
 
 block_titles = {
     'AS': 'Confronto tra i giorni precedenti al lockdown e oggi',
-    'HS': 'Storici (andamento da aprile 2020)',
+    'HS': 'Storici (andamento da febbraio 2020)',
     'PR': 'Predizioni per le prossime 2 settimane',
     'ST': 'Confronto tra nazioni europee',
 }
+kinds = {
+    'intensive': 'dei casi di TERAPIA INTENSIVA',
+    'new': 'dei nuovi casi positivi al tampone',
+    'deaths': 'delle morti causate da COVID-19',
+    'ospitalized': 'del numero di persone attualmente in ospedale causa COVID-19',
+}
+
+
+def get_title_plot(fname):
+    parts = fname.split('_')
+    reg = (parts[1] == 'national' and 'Italia') or parts[1]
+    return f"\n{block_titles[parts[0]]} {kinds[parts[2]]} in {parts[1]}"
 
 
 def write_rd2(last_day, d3):
@@ -36,7 +48,7 @@ def write_rd2(last_day, d3):
                 document.append("\n".join(block))
             tp = f[:2]
             block = [f"### {block_titles[tp]}\n"]
-        block.append(f"{f[3:]}\n![{tp}](images/{f})")
+        block.append(f"{get_title_plot(f)}\n![{tp}](images/{f})")
     document.append("\n".join(block))
 
     # write file
