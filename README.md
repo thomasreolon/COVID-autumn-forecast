@@ -1,7 +1,7 @@
 
 # COVID-autumn-forecast
 Alcune Statistiche sul covid in Italia, Francia & Inghilterra
-ultimo aggiornamento --> 2020-10-23
+ultimo aggiornamento --> 2020-10-24
 Fonte dei dati sull' italia: [pcm-dpc covid repository](https://github.com/pcm-dpc/COVID-19/blob/master/dati-json/dpc-covid19-ita-regioni.json)
 Altre fonti: [Francia]('https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'),  [Regno Unito](https://api.coronavirus.data.gov.uk/v1)
 
@@ -20,46 +20,71 @@ L'Italia il 18 marzo 2020
 ```
 ```
 L'Italia 3 giorni fa
-    terapia_intensiva:      539
-    nuovi_positivi:         7332
-    totale_ospedalizzati:   6009
+    terapia_intensiva:      926
+    nuovi_positivi:         15199
+    totale_ospedalizzati:   9983
 ```
 ```
 L'Italia OGGI
-    terapia_intensiva:      705
-    nuovi_positivi:         10925
-    totale_ospedalizzati:   7322
+    terapia_intensiva:      1128
+    nuovi_positivi:         19644
+    totale_ospedalizzati:   12415
 ```
 
 
 ### Confronto tra nazioni europee
 
-Italia_Francia_intensive.png
-![ST](images/ST_Italia_Francia_intensive.png)
-Italia_Francia_hospitalized.png
-![ST](images/ST_Italia_Francia_hospitalized.png)
-Italia_Francia_RegnoUnito_new_cases.png
-![ST](images/ST_Italia_Francia_RegnoUnito_new_cases.png)
+
+Confronto tra nazioni europee dei casi di TERAPIA INTENSIVA in Italia-Francia
+![ST](images/ST_Italia-Francia_intensive.png)
+
+Confronto tra nazioni europee del numero di persone attualmente in ospedale causa COVID-19 in Italia-Francia
+![ST](images/ST_Italia-Francia_hospitalized.png)
+
+Confronto tra nazioni europee dei nuovi casi positivi al tampone in Italia-Francia-RegnoUnito
+![ST](images/ST_Italia-Francia-RegnoUnito_new_cases.png)
 
 ### Predizioni per le prossime 2 settimane
 
-national_intensive.png
+
+Predizioni per le prossime 2 settimane dei casi di TERAPIA INTENSIVA in Italia
 ![PR](images/PR_national_intensive.png)
 
-### Storici (andamento da aprile 2020)
+Predizioni per le prossime 2 settimane del numero di persone attualmente in ospedale causa COVID-19 in Italia
+![PR](images/PR_national_hospitalized.png)
 
-national_intensive.png
+### Storici (andamento da febbraio 2020)
+
+
+Storici (andamento da febbraio 2020) dei nuovi casi positivi al tampone in Italia
+![HS](images/HS_national_new_cases.png)
+
+Storici (andamento da febbraio 2020) dei casi di TERAPIA INTENSIVA in Italia
 ![HS](images/HS_national_intensive.png)
+
+Storici (andamento da febbraio 2020) del numero di persone attualmente in ospedale causa COVID-19 in Italia
+![HS](images/HS_national_hospitalized.png)
+
+Storici (andamento da febbraio 2020) delle morti causate da COVID-19 in Italia
+![HS](images/HS_national_deaths.png)
 
 ### Confronto tra i giorni precedenti al lockdown e oggi
 
-national_deaths.png
-![AS](images/AS_national_deaths.png)
-Veneto_intensive.png
+
+Confronto tra i giorni precedenti al lockdown e oggi dei nuovi casi positivi al tampone in Veneto
+![AS](images/AS_Veneto_new_cases.png)
+
+Confronto tra i giorni precedenti al lockdown e oggi dei casi di TERAPIA INTENSIVA in Veneto
 ![AS](images/AS_Veneto_intensive.png)
-Sicilia_intensive.png
-![AS](images/AS_Sicilia_intensive.png)
-P.A.Trento_intensive.png
+
+Confronto tra i giorni precedenti al lockdown e oggi dei casi di TERAPIA INTENSIVA in P.A.Trento
 ![AS](images/AS_P.A.Trento_intensive.png)
-Lombardia_intensive.png
+
+Confronto tra i giorni precedenti al lockdown e oggi dei casi di TERAPIA INTENSIVA in Lombardia
 ![AS](images/AS_Lombardia_intensive.png)
+
+Confronto tra i giorni precedenti al lockdown e oggi dei nuovi casi positivi al tampone in Campania
+![AS](images/AS_Campania_new_cases.png)
+
+Confronto tra i giorni precedenti al lockdown e oggi dei casi di TERAPIA INTENSIVA in Campania
+![AS](images/AS_Campania_intensive.png)

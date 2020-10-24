@@ -16,14 +16,15 @@ kinds = {
     'intensive': 'dei casi di TERAPIA INTENSIVA',
     'new': 'dei nuovi casi positivi al tampone',
     'deaths': 'delle morti causate da COVID-19',
-    'ospitalized': 'del numero di persone attualmente in ospedale causa COVID-19',
+    'hospitalized': 'del numero di persone attualmente in ospedale causa COVID-19',
 }
 
 
 def get_title_plot(fname):
     parts = fname.split('_')
     reg = (parts[1] == 'national' and 'Italia') or parts[1]
-    return f"\n{block_titles[parts[0]]} {kinds[parts[2]]} in {parts[1]}"
+    kd = parts[2].split('.')[0]
+    return f"\n{block_titles[parts[0]]} {kinds[kd]} in {reg}"
 
 
 def write_rd2(last_day, d3):
