@@ -28,12 +28,20 @@ pltmk = PlotsMaker(ndf, rdf, ukdf, frdf)
 #  new_cases --> nuovi_positivi
 #########################################################
 
+# TODOs
+# better graph
+# better description title
+# old previsions?
+
+
 # april vs september (natioanal & regional level)
 pltmk.make_april_september(region="Veneto")
 pltmk.make_april_september(region="Lombardia")
 pltmk.make_april_september(region="P.A. Trento")
-pltmk.make_april_september(kind="deaths")
-pltmk.make_april_september(region="Sicilia", kind="intensive")
+pltmk.make_april_september(region="Campania", kind="intensive")
+
+pltmk.make_april_september(region="Veneto", kind="new_cases")
+pltmk.make_april_september(region="Campania", kind="new_cases")
 
 # nations comparisons
 pltmk.make_states_comparison(kind='intensive')
@@ -41,10 +49,14 @@ pltmk.make_states_comparison(kind='new_cases')
 pltmk.make_states_comparison(kind='hospitalized')
 
 # prediction for the future
-pltmk.make_prediction()
+pltmk.make_prediction(base_date='2020-09-21')
+pltmk.make_prediction(base_date='2020-09-15', kind='hospitalized')
 
 # plot all history
 pltmk.make_history()
+pltmk.make_history(kind='hospitalized')
+pltmk.make_history(kind='new_cases')
+pltmk.make_history(kind='deaths')
 
 
 # WRITE
