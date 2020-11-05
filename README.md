@@ -1,7 +1,7 @@
 
 # COVID-autumn-forecast
 Alcune Statistiche sul covid in Italia, Francia & Inghilterra
-ultimo aggiornamento --> 2020-11-02
+ultimo aggiornamento --> 2020-11-05
 Fonte dei dati sull' italia: [pcm-dpc covid repository](https://github.com/pcm-dpc/COVID-19/blob/master/dati-json/dpc-covid19-ita-regioni.json)
 Altre fonti: [Francia]('https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'),  [Regno Unito](https://api.coronavirus.data.gov.uk/v1)
 
@@ -19,17 +19,21 @@ L'Italia il 18 marzo 2020
     totale_ospedalizzati:   16620 
 ```
 ```
-L'Italia 3 giorni fa
-    terapia_intensiva:      1746
-    nuovi_positivi:         31084
-    totale_ospedalizzati:   18740
+L'Italia 3 giorni prima
+    terapia_intensiva:      1939
+    nuovi_positivi:         29907
+    totale_ospedalizzati:   20841
 ```
 ```
-L'Italia OGGI
-    terapia_intensiva:      2022
-    nuovi_positivi:         22253
-    totale_ospedalizzati:   21862
+L'Italia pochi giorni fa (2020-11-05)
+    terapia_intensiva:      2292
+    nuovi_positivi:         30550
+    totale_ospedalizzati:   24408
 ```
+
+___
+La pandemia del 1918 era stagionale, come questa
+![pand1900](images/PandemicWaves.jpg)
 
 
 ### Confronto tra nazioni europee
