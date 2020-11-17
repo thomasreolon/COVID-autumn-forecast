@@ -74,6 +74,9 @@ class MyDF(object):
         bd = date(*[int(x) for x in zero_date.split('-')])
         tmp2 = []
         for dd in tmp:
+            # solve bug: dataset dates have _ instead of -
+            dd = '-'.join(dd.split('_'))
+
             d = date(*[int(x) for x in dd.split('-')])
             tmp2.append((d-bd).days)
 
