@@ -12,6 +12,43 @@ TODO = {
 # current path
 funct_folder = pathlib.Path(__file__).parent.absolute()
 
+
+def clean_data(results):
+    # delete outliers from dataset
+    new_results = []
+    keys = list(results[0].keys())
+    if 'data' in keys:
+        keys.remove('data')
+    avgs = {k: 0 for k in keys}
+    std = {k: 0 for k in keys}
+
+    # mean
+    for record in results:
+        for k in keys:
+            avgs[k] += record[k]
+    for k in keys:
+        avgs[k] /= len(results)
+
+    # var
+    for record in results:
+        for k in keys:
+            std[k] += (record[k]-avgs[k])**2
+
+    for k in keys:
+        std[k] = (std[k]/len(results))**(1/2)
+
+    for record in results:
+        ok = True
+        for k in keys:
+            if (record[k] - avgs[k])**2 > 5/2*std[k]**2:
+                ok = False
+                break
+        if ok:
+            new_results.append(record)
+
+    return new_results
+
+
 # ITALY DATA
 try:
     if 'IT' not in TODO:
@@ -66,6 +103,7 @@ try:
             pass
 
     results = [x[1] for x in results.items()]
+    results = clean_data(results)
 
     with open(FRANCE_FILE, 'w') as fout:
         json.dump(results, fout)

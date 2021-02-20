@@ -44,8 +44,8 @@ pltmk.make_states_comparison(kind='new_cases')
 pltmk.make_states_comparison(kind='hospitalized')
 
 # prediction for the future
-pltmk.make_prediction(base_date='2020-09-21')
-pltmk.make_prediction(base_date='2020-09-15', kind='hospitalized')
+pltmk.make_prediction()
+pltmk.make_prediction(kind='hospitalized')
 
 # plot all history
 pltmk.make_history()

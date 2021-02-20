@@ -90,7 +90,7 @@ class PlotsMaker():
         plot_comparison(x, y, dates, labels, style='dark_background',
                         title=title, save=f_output)
 
-    def make_prediction(self, region=None, kind='intensive', base_date='2020-08-31'):
+    def make_prediction(self, region=None, kind='intensive', base_date=None):
         # get region
         df = self.national
         if region:
@@ -98,6 +98,22 @@ class PlotsMaker():
                 df = self.regional.get_region(region)
             except Exception as e:
                 print(f"FAILED GETTING REGION {region} --> {e}")
+        if not base_date:
+            STR = 5
+            array = df.compose(kind)
+            dates = df.compose('dates')
+            trend, started, last = 0, False, 1e7
+            for val, date in zip(reversed(array), reversed(dates)):
+                if val > last:
+                    trend = min(trend+1, STR)
+                else:
+                    trend = max(trend-1, -STR)
+                last = val
+                if trend**2 >= STR**2:
+                    started = True
+                if trend == 0 and started:
+                    break
+            base_date = date
 
         # prediction: exponential fit
         y = df.compose([('after', base_date), kind])
