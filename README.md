@@ -1,7 +1,7 @@
 
 # COVID-autumn-forecast
 Alcune Statistiche sul covid in Italia, Francia & Inghilterra
-ultimo aggiornamento --> 2021-03-26
+ultimo aggiornamento --> 2021-04-07
 Fonte dei dati sull' italia: [pcm-dpc covid repository](https://github.com/pcm-dpc/COVID-19/blob/master/dati-json/dpc-covid19-ita-regioni.json)
 Altre fonti: [Francia]('https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'),  [Regno Unito](https://api.coronavirus.data.gov.uk/v1)
 
@@ -20,15 +20,15 @@ L'Italia il 18 marzo 2020
 ```
 ```
 L'Italia 3 giorni prima
-    terapia_intensiva:      3546
-    nuovi_positivi:         18765
-    totale_ospedalizzati:   31974
+    terapia_intensiva:      3703
+    nuovi_positivi:         18025
+    totale_ospedalizzati:   32135
 ```
 ```
-L'Italia pochi giorni fa (2021-03-26)
-    terapia_intensiva:      3628
-    nuovi_positivi:         23987
-    totale_ospedalizzati:   32100
+L'Italia pochi giorni fa (2021-04-07)
+    terapia_intensiva:      3683
+    nuovi_positivi:         13708
+    totale_ospedalizzati:   32999
 ```
 
 ___
